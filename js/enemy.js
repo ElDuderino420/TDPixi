@@ -6,8 +6,8 @@ class Enemy {
         this.hp = 10;
         this.maxHP;
         this.radius = 20;
-        this.speed = 50;
-        this.lastpos = 0;
+        this.speed = 5;
+        this.waypoint = 0;
         this.dead = false;
         
         
@@ -29,9 +29,40 @@ class Enemy {
     }
 
     update() {
-        
+        this.x = this.shape.x;
+        this.y = this.shape.y;
         //if(path[lastpos])
-        console.log(path[lastpos]);
+        //console.log(this.path[this.lastpos]);
+        let target = this.path[this.waypoint];
+        console.log(this.waypoint);
+        console.log(this.path.length)
+        let pointx = target.x*cellsize+cellsize/2;
+        let pointy = target.y*cellsize+cellsize/2;
+        console.log("x: " + pointx + " y: " + pointy);
+        if((this.x-pointx) > 3) {
+            this.x -= this.speed;
+        }
+        if((this.x-pointx) < -3) {
+            this.x += this.speed;
+        }
+        if((this.y-pointy) > 3) {
+            this.y -= this.speed;
+        }
+        if((this.y-pointy) < -3) {
+            this.y += this.speed;
+        }
+        this.shape.x = this.x;
+        this.shape.y = this.y;
+        if(Math.abs(this.x-pointx) <= 3 && Math.abs(this.y-pointy) <= 3) {
+            this.waypoint++;
+
+            if(this.waypoint >= this.path.length){
+                u.remove(this.shape);
+                this.dead = true;
+            }
+        }
+
+        
 
 
 

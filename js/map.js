@@ -106,7 +106,7 @@ class Map{
     getPath(callback) {
         easystar.setGrid(this.maparray);
         easystar.setAcceptableTiles([1,2,3]);
-        easystar.findPath(this.start[1],this.start[0],this.end[0],this.end[1], callback);
+        easystar.findPath(this.start[1],this.start[0],this.end[1],this.end[0], callback);
         easystar.calculate();
     }
 }

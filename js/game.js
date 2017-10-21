@@ -63,6 +63,10 @@ function update() {
         t.shoot();
     })
 
+    enemies.forEach(function(e) {
+        e.update();
+    })
+
 
     //Tell the `renderer` to `render` the `stage`
     renderer.render(stage);
