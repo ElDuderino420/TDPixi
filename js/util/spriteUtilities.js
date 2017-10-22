@@ -958,8 +958,8 @@ class SpriteUtilities{
     //them to position the bullet on the new parent container
     let tempGx = bullet.toGlobal(container).x,
         tempGy = bullet.toGlobal(container).y;
-        console.log(bullet.toGlobal(container))
-        console.log(bullet.getGlobalPosition())
+        //console.log(bullet.toGlobal(container))
+        //console.log(bullet.getGlobalPosition())
     //Add the bullet to the new parent container using
     //the new global coordinates
     container.addChild(bullet);

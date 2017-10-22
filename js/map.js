@@ -12,6 +12,7 @@ class Map{
             that.path = path;
             console.log(path);
             that.spawnwave(2);
+            wave = 1;
         });
         
         
@@ -79,7 +80,7 @@ class Map{
 
     spawnwave(number) {
         for (let i = 0; i < number; i++){
-            enemies.push(new Enemy(this.path));
+            enemies.push(new Enemy(this.path, i));
         }
     }
 
@@ -87,7 +88,7 @@ class Map{
         for (let i = 0; i < this.maparray.length; i++){
             let index = this.maparray[i].indexOf(2);
             if(index > -1) {
-                console.log([i, index]);
+                //console.log([i, index]);
                 return [i, index];
             }
         }
@@ -97,7 +98,7 @@ class Map{
         for (let i = 0; i < this.maparray.length; i++){
             let index = this.maparray[i].indexOf(3);
             if(index > -1) {
-                console.log([i, index]);
+                //console.log([i, index]);
                 return [i, index];
             }
         }
