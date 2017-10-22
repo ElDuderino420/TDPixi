@@ -14,7 +14,7 @@ class Tower {
         //this.tower.rotation+=2;
         this.tower.interactive = true;
         this.shoottime = 0;
-        this.attackspeed = 10;
+        this.attackspeed = 100;
         tile.interactive = false;
         u.shake(this.tower, 0.5, false);
         this.tower.click = function(mouseData) {

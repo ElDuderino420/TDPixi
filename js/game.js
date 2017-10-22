@@ -117,15 +117,15 @@ function update() {
             if(bump.hitTestCircle(a.shape,b,true)){
                 console.log("bang bang")
                 a.hp--;
-                //a.shape.fillStyle-=500;
-                a.speed = a.speed*2
+                a.shape.fillStyle-=500;
+                a.speed = a.speed/2
                 setTimeout(function() {
-                    a.speed = a.speed*5;
-                }, 10);
+                    a.speed = a.speed*2;
+                }, 100);
 
-                //b.dead = true;
+                b.dead = true;
                 
-                //stage.removeChild(b);
+                stage.removeChild(b);
                 
             }
         })
