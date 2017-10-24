@@ -693,6 +693,101 @@ class SpriteUtilities{
     return sprite;
   }
 
+  //Circle
+  emptycircle(
+    diameter = 32, 
+    strokeStyle = 0x0033CC, 
+    lineWidth = 1,
+    x = 0, 
+    y = 0 
+  ){
+
+  let o = new this.Graphics();
+  o._diameter = diameter;
+  o._strokeStyle = this.color(strokeStyle);
+  o._lineWidth = lineWidth;
+
+  //Draw the circle
+  let draw = (diameter, strokeStyle, lineWidth) => {
+    o.clear(); 
+    if (lineWidth > 0) {
+      o.lineStyle(lineWidth, strokeStyle, 1);
+    }
+    o.arc(0, 0, diameter / 2, 0, 2*Math.PI);
+  };
+
+  //Draw the cirlce
+  draw(o._diameter, o._strokeStyle, o._lineWidth);
+
+  //Generate a texture from the rectangle
+  let texture = o.generateTexture();
+
+  //Use the texture to create a sprite
+  let sprite = new this.Sprite(texture);
+
+  //Position the sprite
+  sprite.x = x;
+  sprite.y = y;
+
+  //Add getters and setters to the sprite
+  let self = this;
+  Object.defineProperties(sprite, {
+    "strokeStyle": {
+      get() {
+        return o._strokeStyle;
+      },
+      set(value) {
+        o._strokeStyle = self.color(value);
+
+        //Draw the cirlce
+        draw(o._diameter, o._fillStyle, o._strokeStyle, o._lineWidth);
+
+        //Generate a new texture and set it as the sprite's texture
+        let texture = o.generateTexture();
+        o._sprite.texture = texture;
+      }, 
+      enumerable: true, configurable: true
+    },
+    "diameter": {
+      get() {
+        return o._diameter;
+      },
+      set(value) {
+        o._lineWidth = 10;
+
+        //Draw the cirlce
+        draw(o._diameter, o._fillStyle, o._strokeStyle, o._lineWidth);
+
+        //Generate a new texture and set it as the sprite's texture
+        let texture = o.generateTexture();
+        o._sprite.texture = texture;
+      }, 
+      enumerable: true, configurable: true
+    },
+    "radius": {
+      get() {
+        return o._diameter / 2;
+      },
+      set(value) {
+
+        //Draw the cirlce
+        draw(value * 2, o._fillStyle, o._strokeStyle, o._lineWidth);
+
+        //Generate a new texture and set it as the sprite's texture
+        let texture = o.generateTexture();
+        o._sprite.texture = texture;
+      }, 
+      enumerable: true, configurable: true
+    },
+  });
+  //Get a local reference to the sprite so that we can 
+  //change the circle properties later using the getters/setters
+  o._sprite = sprite;
+
+  //Return the sprite
+  return sprite;
+}
+
   //Line
   line(
       strokeStyle = 0x000000, 

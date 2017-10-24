@@ -12,6 +12,7 @@ class UI {
     }
 
     openTowerMenu(tower){
+        
         console.log(tower);
         this.towermenu.style.display = "";
         this.towermenu.style.width = "250px";
@@ -36,6 +37,21 @@ class UI {
 
         this.t_dmg.onclick = function(){
             tower.dmg++;
+            ui.openTowerMenu(tower);
+        }
+
+        this.t_dmg.oncontextmenu = function(){
+            tower.dmg--;
+            ui.openTowerMenu(tower);
+        }
+
+        this.t_range.onclick = function(){
+            tower.upgraderange(1);
+            ui.openTowerMenu(tower);
+        }
+
+        this.t_range.oncontextmenu = function(){
+            tower.upgraderange(-1);
             ui.openTowerMenu(tower);
         }
 

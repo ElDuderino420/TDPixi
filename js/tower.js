@@ -3,8 +3,8 @@ class Tower {
         //console.log(u._getCenter(tile, tile.width, "x"))
         this.ability = "beam";
         //this.ability = "projectile";
-
-        this.range = 200;
+        this.tile = tile;
+        this.range = 70;
         this.targets = [];
         this.multi = true;
         this.pierce = false;
@@ -14,9 +14,13 @@ class Tower {
         this.tower.anchor.set(0.5, 0.5);
         this.tower.type = "single";
 
-        this.rangeshape = u.circle(this.range, "white", "black", 1, this.tower.x, this.tower.y);
+        this.rangeshape = u.circle(this.range*2, "white", "black", 1, this.tower.x, this.tower.y);
+        this.rangeview = u.emptycircle(this.range*2, "black", 2, this.tower.x + tile.toGlobal(stage).x, this.tower.y + tile.toGlobal(stage).y);
+        
         this.rangeshape.visible = false;
+        this.rangeview.visible = true;
         this.rangeshape.anchor.set(0.5, 0.5);
+        this.rangeview.anchor.set(0.5, 0.5);
         //this.tower.rotation+=2;
         this.tower.interactive = true;
         this.shoottime = 0;
@@ -26,8 +30,8 @@ class Tower {
 
         let that = this;
         this.tower.click = function (mouseData) {
-            //console.log(mouseData.target.toGlobal(stage));
-
+            
+            //that.rangeview.visible = !that.rangeview.visible
             ui.openTowerMenu(that);
             //GUI OPEN TOWER MENU
             //mouseData.target.fillStyle = "Aqua";
@@ -42,7 +46,7 @@ class Tower {
             //mouseData.target.fillStyle = "Lime";
 
         }
-
+        stage.addChild(this.rangeview);
         tile.addChild(this.rangeshape);
         tile.addChild(this.tower);
 
@@ -58,6 +62,28 @@ class Tower {
                 this.tower.rotation
             );
         } */
+
+        Object.defineProperties(that, {
+            "radius": {
+                get() {
+                    return that.range;
+                }, 
+                set(value) {
+                    console.log(value);
+                    that.range += value;
+                    
+                    this.rangeshape = u.circle(this.range*2, "white", "black", 1, this.tower.x, this.tower.y);
+                    this.rangeview = u.emptycircle(this.range*2, "black", 2, this.tower.x + tile.toGlobal(stage).x, this.tower.y + tile.toGlobal(stage).y);
+                    
+                    this.rangeshape.visible = false;
+                    this.rangeview.visible = true;
+                    this.rangeshape.anchor.set(0.5, 0.5);
+                    this.rangeview.anchor.set(0.5, 0.5);
+                    console.log(that.rangeview.radius)
+                },
+                enumerable: true, configurable: true
+            }
+        })
 
     }
 
@@ -133,6 +159,24 @@ class Tower {
             this.shoottime--;
         }
     }
+
+    upgraderange(value) {
+        stage.removeChild(this.rangeview);
+        this.tile.removeChild(this.rangeshape);
+        console.log(value);
+        this.range += value;
+        
+        this.rangeshape = u.circle(this.range*2, "white", "black", 1, this.tower.x, this.tower.y);
+        this.rangeview = u.emptycircle(this.range*2, "black", 2, this.tower.x + this.tile.toGlobal(stage).x, this.tower.y + this.tile.toGlobal(stage).y);
+        
+        this.rangeshape.visible = false;
+        this.rangeview.visible = true;
+        this.rangeshape.anchor.set(0.5, 0.5);
+        this.rangeview.anchor.set(0.5, 0.5);
+        stage.addChild(this.rangeview);
+        this.tile.addChild(this.rangeshape);
+        console.log(this.rangeview.radius)
+    };
 
 
 

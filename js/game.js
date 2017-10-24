@@ -61,7 +61,7 @@ function init() {
         antialias: true,
         transparent: true,
         resolution: 2,
-        roundPizels: true
+        roundPizels: false
     });
 
     //Add the canvas to the HTML document
