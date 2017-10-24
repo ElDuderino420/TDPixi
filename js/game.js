@@ -1,7 +1,9 @@
 const u = new SpriteUtilities(PIXI);
 const bump = new Bump(PIXI);
 const easystar = new EasyStar.js();
+const myView = document.getElementById('pixiCanvas');
 
+let ui;
 let ticker = PIXI.ticker.shared;
 let renderer, stage;
 let cellsize = 30;
@@ -55,25 +57,24 @@ function init() {
     selectedmap = map3;
 
     renderer = PIXI.autoDetectRenderer(selectedmap[0].length*cellsize, selectedmap.length*cellsize, {
+        view: myView,
         antialias: true,
         transparent: true,
         resolution: 2
     });
 
     //Add the canvas to the HTML document
-    document.body.appendChild(renderer.view);
+    //document.body.appendChild(renderer.view);
 
     //Create a container object called the `stage`
     stage = new PIXI.Container();
 
     map = new Map(selectedmap,cellsize);
-
+    
+    ui = new UI();
+    
     map.draw(stage);
     
-    //map.spawnwave(1);
-
-    
-
     requestAnimationFrame(update);
 }
 
@@ -102,15 +103,16 @@ function update() {
     })
 
     bullets = bullets.filter(function(b) {
-        if(b.x < 0 || b.y < 0 || b.x > selectedmap[0].length*cellsize || b.y > selectedmap.length*cellsize){
+        /* if(b.bullet.x < 0 || b.bullet.y < 0 || b.bullet.x > selectedmap[0].length*cellsize || b.bullet.y > selectedmap.length*cellsize){
             b.dead = true;
-            stage.removeChild(b);
-        }
-        return b.dead != true;
+            stage.removeChild(b.bullet);
+        } */
+        return !b.dead;
     })
 
     bullets.forEach(function(b) {
-        b.x += b.vx;
+        b.update();
+        /* b.x += b.vx;
         b.y += b.vy;
 
         alive.forEach(function(a) {
@@ -118,9 +120,9 @@ function update() {
                 console.log("bang bang")
                 a.hp--;
                 a.shape.fillStyle-=500;
-                a.speed = a.speed/2
+                //a.speed = a.speed/2
                 setTimeout(function() {
-                    a.speed = a.speed*2;
+                    //a.speed = a.speed*2;
                 }, 100);
 
                 b.dead = true;
@@ -128,7 +130,7 @@ function update() {
                 stage.removeChild(b);
                 
             }
-        })
+        }) */
 
     })
 
@@ -148,7 +150,6 @@ function update() {
 
     //Tell the `renderer` to `render` the `stage`
     renderer.render(stage);
-
     requestAnimationFrame(update);
     u.update();
 }
@@ -159,3 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
     init();
 
 });
+
+document.oncontextmenu = function () {
+    return false;
+}

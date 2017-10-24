@@ -37,7 +37,7 @@ class Enemy {
             that.speed = that.speed/2;
             setTimeout(function() {
                 that.speed = 1;
-            }, 10);
+            }, 1000);
         }
         stage.addChild(this.shape);
     }

@@ -3,10 +3,13 @@ class Tower {
         //console.log(u._getCenter(tile, tile.width, "x"))
         this.range = 200;
         this.targets = [];
-        
+        this.multi = true;
+        this.pierce = false;
+        this.aoe = false;
+        this.dmg = 5;
         this.tower = u.rectangle(tile.width-10, tile.height-10, "indigo", "black", 1, u._getCenter(tile, tile.width, "x"), u._getCenter(tile, tile.height, "y"));
         this.tower.anchor.set(0.5, 0.5);
-        
+        this.tower.type = "single";
         
         this.rangeshape = u.circle(this.range, "white", "black", 1, this.tower.x, this.tower.y);
         this.rangeshape.visible = false;
@@ -17,42 +20,24 @@ class Tower {
         this.attackspeed = 100;
         tile.interactive = false;
         u.shake(this.tower, 0.5, false);
+
+        let that = this;
         this.tower.click = function(mouseData) {
             //console.log(mouseData.target.toGlobal(stage));
-            mouseData.target.rotation ++;
-            console.log(mouseData.target.rotation);
-            /* let t = mouseData.target;
-            u.shoot(
-                t,
-                t.rotation,
-                t.x,
-                t.y,
-                //tile.getGlobalPosition().x,
-                //tile.getGlobalPosition().y,
-                stage,
-                1,
-                bullets,
 
-                () => u.circle(8,"red")
-            ) */
+            ui.openTowerMenu(that);
+            //GUI OPEN TOWER MENU
+            //mouseData.target.fillStyle = "Aqua";
+            
         }
         this.tower.rightclick = function(mouseData) {
-            //console.log(mouseData.target.toGlobal(stage));
-            mouseData.target.rotation--;
-            /* let t = mouseData.target;
-            u.shoot(
-                t,
-                t.rotation,
-                t.x,
-                t.y,
-                //tile.getGlobalPosition().x,
-                //tile.getGlobalPosition().y,
-                stage,
-                1,
-                bullets,
-
-                () => u.circle(8,"red")
-            ) */
+            
+            
+            /* that.pierce = !that.pierce;
+            console.log("Pierce: " + that.pierce); */
+            
+            //mouseData.target.fillStyle = "Lime";
+            
         }
         
         tile.addChild(this.rangeshape);
@@ -75,6 +60,7 @@ class Tower {
         this.targets = alive.filter(function (e) {
             return bump.hitTestCircle(e.shape, that.rangeshape, true); 
         })
+        //console.log(this.targets);
     }
 
     shoot() {
@@ -82,9 +68,19 @@ class Tower {
         if(this.shoottime < 0){
             if(this.targets.length > 0){
                 this.tower.rotation = Math.atan2(this.targets[0].y-this.rangeshape.gy, this.targets[0].x-this.rangeshape.gx);
-                console.log(this.tower.rotation);
                 this.shoottime = this.attackspeed;
-                u.shoot(
+                new Projectile(
+                    this.tower, 
+                    u._getCenter(this.tower, this.tower.width, "x"),
+                    u._getCenter(this.tower, this.tower.height, "y"),
+                    this.tower.rotation,
+                    5,
+                    this.dmg,
+                    this.pierce,
+                    this.aoe,
+                    this.multi
+                );
+                /* u.shoot(
                     this.tower,
                     this.tower.rotation,
                     u._getCenter(this.tower, this.tower.width, "x"),
@@ -94,13 +90,17 @@ class Tower {
                     bullets,
         
                     () => u.circle(4,"red")
-                )
+                ) */
             }
             
         } else {
             this.shoottime--;
         }
         
+    }
+
+    upgrade(newshoot) {
+        this.shoot = newshoot();
     }
 
     
