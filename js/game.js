@@ -137,7 +137,7 @@ function update() {
 
     towers.forEach(function(t) {
         t.update();
-        t.shoot();
+        //t.shoot();
     })
 
     

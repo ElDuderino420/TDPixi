@@ -2,6 +2,7 @@ class UI {
     constructor() {
         this.towermenu = document.getElementById("towermenu");
         this.t_lvl = document.getElementById("lvl");
+        this.t_type = document.getElementById("type");
         this.t_dmg = document.getElementById("dmg");
         this.t_range = document.getElementById("range");
         this.t_pierce = document.getElementById("pierce");
@@ -17,11 +18,21 @@ class UI {
         this.towermenu.style.height = selectedmap.length*cellsize*2 + "px";
 
         this.t_lvl.innerHTML = 1;
+        this.t_type.innerHTML = tower.ability;
         this.t_dmg.innerHTML = tower.dmg;
         this.t_range.innerHTML = tower.range;
         this.t_pierce.innerHTML = tower.pierce;
         this.t_aoe.innerHTML = tower.aoe;
         this.t_multi.innerHTML = tower.multi;
+
+        this.t_type.onclick = function(){
+            if(tower.ability == "projectile"){
+                tower.ability = "beam";
+            } else if(tower.ability == "beam"){
+                tower.ability = "projectile";
+            }
+            ui.openTowerMenu(tower);
+        }
 
         this.t_dmg.onclick = function(){
             tower.dmg++;
