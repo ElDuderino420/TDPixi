@@ -60,7 +60,8 @@ function init() {
         view: myView,
         antialias: true,
         transparent: true,
-        resolution: 2
+        resolution: 2,
+        roundPizels: true
     });
 
     //Add the canvas to the HTML document
