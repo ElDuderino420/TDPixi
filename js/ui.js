@@ -6,6 +6,7 @@ class UI {
         this.t_lvl      = document.getElementById("lvl");
         this.t_type     = document.getElementById("type");
         this.t_dmg      = document.getElementById("dmg");
+        this.t_reload   = document.getElementById("reload");
         this.t_range    = document.getElementById("range");
         this.t_pierce   = document.getElementById("pierce");
         this.t_aoe      = document.getElementById("aoe");
@@ -23,8 +24,10 @@ class UI {
         this.selectedtower = null;
         let that = this;
         this.t_buy.onclick = function() {
-            player.buymode = true;
-            player.gold-=50;
+            if(player.gold >= 50) {
+                player.buymode = true;
+                player.gold-=50;
+            }
 
         }
 
@@ -69,6 +72,7 @@ class UI {
         this.t_lvl.innerHTML    = 1;
         this.t_type.innerHTML   = tower.ability;
         this.t_dmg.innerHTML    = tower.dmg;
+        this.t_reload.innerHTML = tower.attackspeed;
         this.t_range.innerHTML  = tower.range;
         this.t_pierce.innerHTML = tower.pierce;
         this.t_aoe.innerHTML    = tower.aoe;
@@ -90,6 +94,16 @@ class UI {
 
         this.t_dmg.oncontextmenu = function(){
             tower.dmg--;
+            ui.openTowerMenu(tower);
+        }
+
+        this.t_reload.onclick = function(){
+            tower.attackspeed--;
+            ui.openTowerMenu(tower);
+        }
+
+        this.t_reload.oncontextmenu = function(){
+            tower.attackspeed++;
             ui.openTowerMenu(tower);
         }
 

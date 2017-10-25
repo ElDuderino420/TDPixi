@@ -12,7 +12,6 @@ class Tower {
         this.dmg        = 5;
         this.tower      = u.rectangle(tile.width - 10, tile.height - 10, "indigo", "black", 1, u._getCenter(tile, tile.width, "x"), u._getCenter(tile, tile.height, "y"));
         this.tower.anchor.set(0.5, 0.5);
-        this.tower.type = "single";
 
         this.rangeshape = u.circle(this.range * 2, "white", "black", 1, this.tower.x, this.tower.y);
         this.rangeview  = u.emptycircle(this.range * 2, "black", 2, this.tower.x + tile.toGlobal(stage).x, this.tower.y + tile.toGlobal(stage).y);
@@ -177,6 +176,10 @@ class Tower {
         this.tile.addChild(this.rangeshape);
         console.log(this.rangeview.radius)
     };
+
+    upgrade(newability, dmg, range, reloadspeed, affixarr) {
+
+    }
 
 
 

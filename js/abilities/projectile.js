@@ -62,8 +62,17 @@ class Projectile {
 
             let that = this;
             //that.bullet.radius = that.bullet.radius*2;
-            
-            alive.forEach(function(a) {
+            let proximity = alive.filter(function(a) {
+                return bump.hitTestCircle(a.shape,that.bullet,true);
+            })
+
+            console.log(proximity);
+            if(proximity.length > 0){
+                proximity.forEach(function(p){
+                    that.hit(p);
+                })
+            }
+            /* proximity.forEach(function(a) {
                 if(bump.hitTestCircle(a.shape,that.bullet,true)){
                     
                     if(that.aoe) {
@@ -79,20 +88,14 @@ class Projectile {
                             that.kill();
                         }
                     }
-
-
                     //a.hp-=that.dmg;
                     //a.shape.fillStyle-=500;
                     //a.speed = a.speed/2
                     //setTimeout(function() {
                         //a.speed = a.speed*2;
                     //}, 100);
-                    
-                    
-                    
-                    
                 }
-            })
+            }) */
         }
         
     }
@@ -118,5 +121,21 @@ class Projectile {
             stage.removeChild(impactr);
         }, 20);
 
+    }
+
+    hit(a) {
+        if(this.aoe) {
+            this.impact(a);
+
+            if(!this.pierce){
+                this.kill();
+            }
+        } else {
+            a.hp-= this.dmg;
+
+            if(!this.pierce){
+                this.kill();
+            }
+        }
     }
 }
