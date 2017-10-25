@@ -29,10 +29,14 @@ class UI {
         }
 
         this.try_again.onclick = function() {
+            if(that.selectedtower){
+                stage.removeChild(that.selectedtower.rangeview);
+            }
             player.reset();
             that.try_again.style.display = "none";
             that.t_buy.style.display = "";
             that.nxt_wave.style.display = "";
+            
         }
 
         this.nxt_wave.onclick = function() {

@@ -22,7 +22,7 @@ class Player {
 
         enemies = [];
         towers = [];
-
+        
         update();
 
     }
