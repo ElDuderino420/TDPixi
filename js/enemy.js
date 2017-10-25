@@ -6,7 +6,7 @@ class Enemy {
         this.hp       = 10;
         this.maxHP    = this.hp;
         this.radius   = 15;
-        this.speed    = 5;
+        this.speed    = 1;
         this.waypoint = 0;
         this.dead     = false;
         let that      = this;
