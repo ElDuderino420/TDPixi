@@ -1,36 +1,35 @@
 class Tower {
     constructor(tile) {
         //console.log(u._getCenter(tile, tile.width, "x"))
-        this.ability = "beam";
-        //this.ability = "projectile";
-        this.tile = tile;
-        this.range = 70;
-        this.targets = [];
-        this.multi = true;
-        this.pierce = false;
-        this.aoe = false;
-        this.dmg = 5;
-        this.tower = u.rectangle(tile.width - 10, tile.height - 10, "indigo", "black", 1, u._getCenter(tile, tile.width, "x"), u._getCenter(tile, tile.height, "y"));
+        this.ability    = "beam";
+        //this.ability  = "projectile";
+        this.tile       = tile;
+        this.range      = 70;
+        this.targets    = [];
+        this.multi      = true;
+        this.pierce     = false;
+        this.aoe        = false;
+        this.dmg        = 5;
+        this.tower      = u.rectangle(tile.width - 10, tile.height - 10, "indigo", "black", 1, u._getCenter(tile, tile.width, "x"), u._getCenter(tile, tile.height, "y"));
         this.tower.anchor.set(0.5, 0.5);
         this.tower.type = "single";
 
-        this.rangeshape = u.circle(this.range*2, "white", "black", 1, this.tower.x, this.tower.y);
-        this.rangeview = u.emptycircle(this.range*2, "black", 2, this.tower.x + tile.toGlobal(stage).x, this.tower.y + tile.toGlobal(stage).y);
-        
+        this.rangeshape = u.circle(this.range * 2, "white", "black", 1, this.tower.x, this.tower.y);
+        this.rangeview  = u.emptycircle(this.range * 2, "black", 2, this.tower.x + tile.toGlobal(stage).x, this.tower.y + tile.toGlobal(stage).y);
+
         this.rangeshape.visible = false;
-        this.rangeview.visible = true;
+        this.rangeview.visible  = false;
         this.rangeshape.anchor.set(0.5, 0.5);
         this.rangeview.anchor.set(0.5, 0.5);
-        //this.tower.rotation+=2;
+        //this.tower.rotation  += 2;
         this.tower.interactive = true;
-        this.shoottime = 0;
-        this.attackspeed = 100;
-        tile.interactive = false;
+        this.shoottime         = 0;
+        this.attackspeed       = 100;
         u.shake(this.tower, 0.5, false);
 
         let that = this;
         this.tower.click = function (mouseData) {
-            
+
             //that.rangeview.visible = !that.rangeview.visible
             ui.openTowerMenu(that);
             //GUI OPEN TOWER MENU
@@ -67,21 +66,22 @@ class Tower {
             "radius": {
                 get() {
                     return that.range;
-                }, 
+                },
                 set(value) {
                     console.log(value);
                     that.range += value;
-                    
-                    this.rangeshape = u.circle(this.range*2, "white", "black", 1, this.tower.x, this.tower.y);
-                    this.rangeview = u.emptycircle(this.range*2, "black", 2, this.tower.x + tile.toGlobal(stage).x, this.tower.y + tile.toGlobal(stage).y);
-                    
+
+                    this.rangeshape = u.circle(this.range * 2, "white", "black", 1, this.tower.x, this.tower.y);
+                    this.rangeview = u.emptycircle(this.range * 2, "black", 2, this.tower.x + tile.toGlobal(stage).x, this.tower.y + tile.toGlobal(stage).y);
+
                     this.rangeshape.visible = false;
                     this.rangeview.visible = true;
                     this.rangeshape.anchor.set(0.5, 0.5);
                     this.rangeview.anchor.set(0.5, 0.5);
                     console.log(that.rangeview.radius)
                 },
-                enumerable: true, configurable: true
+                enumerable: true,
+                configurable: true
             }
         })
 
@@ -104,7 +104,7 @@ class Tower {
         })
 
         if (this.targets.length > 0) {
-            
+
             if (this.ability == "projectile") {
                 this.shoot();
             }
@@ -123,7 +123,7 @@ class Tower {
     shoot() {
         if (this.shoottime < 0) {
             this.tower.rotation = Math.atan2(this.targets[0].y - this.rangeshape.gy, this.targets[0].x - this.rangeshape.gx);
-            
+
             this.shoottime = this.attackspeed;
             new Projectile(
                 this.tower,
@@ -145,7 +145,7 @@ class Tower {
         //this.beam.update(targets);
         if (this.shoottime < 0) {
             this.tower.rotation = Math.atan2(this.targets[0].y - this.rangeshape.gy, this.targets[0].x - this.rangeshape.gx);
-            
+
             this.shoottime = this.attackspeed;
             new Beam(
                 this.tower,
@@ -165,10 +165,10 @@ class Tower {
         this.tile.removeChild(this.rangeshape);
         console.log(value);
         this.range += value;
-        
-        this.rangeshape = u.circle(this.range*2, "white", "black", 1, this.tower.x, this.tower.y);
-        this.rangeview = u.emptycircle(this.range*2, "black", 2, this.tower.x + this.tile.toGlobal(stage).x, this.tower.y + this.tile.toGlobal(stage).y);
-        
+
+        this.rangeshape = u.circle(this.range * 2, "white", "black", 1, this.tower.x, this.tower.y);
+        this.rangeview = u.emptycircle(this.range * 2, "black", 2, this.tower.x + this.tile.toGlobal(stage).x, this.tower.y + this.tile.toGlobal(stage).y);
+
         this.rangeshape.visible = false;
         this.rangeview.visible = true;
         this.rangeshape.anchor.set(0.5, 0.5);

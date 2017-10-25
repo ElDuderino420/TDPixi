@@ -5,15 +5,15 @@
 class Beam {
     constructor(shooter, x, y, targets, dmg, angle, arc) {
         
-        this.dead = false;
-        this.dmg = dmg;
+        this.dead    = false;
+        this.dmg     = dmg;
         this.shooter = shooter;
-        this.angle = angle;
+        this.angle   = angle;
         this.targets = targets;
-        this.x = x;
-        this.y = y;
+        this.x       = x;
+        this.y       = y;
 
-        this.arc = arc;
+        this.arc     = arc;
         //Push the bullet into the `bulletArray`
         bullets.push(this);
     }

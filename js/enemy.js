@@ -1,15 +1,15 @@
 class Enemy {
     constructor(path, number) {
-        this.x = path[0].x;
-        this.y = path[0].y;
-        this.path = path;
-        this.hp = 10;
-        this.maxHP;
-        this.radius = 15;
-        this.speed = 1;
+        this.x        = path[0].x;
+        this.y        = path[0].y;
+        this.path     = path;
+        this.hp       = 10;
+        this.maxHP    = this.hp;
+        this.radius   = 15;
+        this.speed    = 5;
         this.waypoint = 0;
-        this.dead = false;
-        let that = this;
+        this.dead     = false;
+        let that      = this;
 
         if(this.speed > 9) {
             this.speed = 9;
@@ -78,6 +78,7 @@ class Enemy {
                 if (this.waypoint >= this.path.length) {
                     // REACHED THE END
                     u.remove(this.shape);
+                    player.hp-=this.maxHP;
                     this.dead = true;
                 }
             }

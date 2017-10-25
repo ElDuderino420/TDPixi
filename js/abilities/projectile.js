@@ -5,11 +5,11 @@
 class Projectile {
     constructor(shooter, x, y, angle, bulletSpeed, dmg, pierce, aoe, multi) {
         //this.type = type;
-        this.pierce = pierce;
-        this.aoe = aoe;
-        this.dead = false;
-        this.dmg = dmg;
-        this.bullet = u.circle(4,"red");
+        this.pierce  = pierce;
+        this.aoe     = aoe;
+        this.dead    = false;
+        this.dmg     = dmg;
+        this.bullet  = u.circle(4,"red");
         this.shooter = shooter;
         //Set the bullet's anchor point to its center
         this.bullet.anchor.set(0.5, 0.5);

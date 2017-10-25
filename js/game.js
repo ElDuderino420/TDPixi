@@ -1,19 +1,20 @@
-const u = new SpriteUtilities(PIXI);
-const bump = new Bump(PIXI);
+const u        = new SpriteUtilities(PIXI);
+const bump     = new Bump(PIXI);
 const easystar = new EasyStar.js();
-const myView = document.getElementById('pixiCanvas');
+const myView   = document.getElementById('pixiCanvas');
 
 let ui;
-let ticker = PIXI.ticker.shared;
+let ticker     = PIXI.ticker.shared;
 let renderer, stage;
-let cellsize = 30;
-let towers = [];
-let bullets = [];
-let enemies = [];
-let alive = [];
-let path = [];
+let cellsize   = 30;
+let towers     = [];
+let bullets    = [];
+let enemies    = [];
+let alive      = [];
+let path       = [];
 let map, selectedmap;
-let wave = 0;
+let wave       = 0;
+let player;
 
 let map2 = [
     [0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -71,7 +72,7 @@ function init() {
     stage = new PIXI.Container();
 
     map = new Map(selectedmap,cellsize);
-    
+    player = new Player();
     ui = new UI();
     
     map.draw(stage);
@@ -81,6 +82,7 @@ function init() {
 
 
 function update() {
+    
 
     alive = enemies.filter(function (e) {
         return e.dead == false;
@@ -148,11 +150,15 @@ function update() {
         map.spawnwave(wave * 2);
     }
 
-
-    //Tell the `renderer` to `render` the `stage`
-    renderer.render(stage);
-    requestAnimationFrame(update);
-    u.update();
+    ui.update();
+    if(player.hp > 0) {
+        //Tell the `renderer` to `render` the `stage`
+        renderer.render(stage);
+        requestAnimationFrame(update);
+        u.update();
+    } else {
+        ui.dead();
+    }
 }
 
 
@@ -163,5 +169,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.oncontextmenu = function () {
-    return false;
+    //return false;
 }

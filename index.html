@@ -13,26 +13,68 @@
 </head>
 
 <body>
-    <div>
+    <div id="game">
+
         <canvas id="pixiCanvas"></canvas>
+        <div id="menu">
+            <div id="towermenu">
+                <div id="towerinfo">
+                    <div class="info">
+                        <br>
+                        <label class="title">Tower Menu</label>
+                        <br>
+                        <br>
+                        <label for="lvl">Level: </label>
+                        <label id="lvl" class="value">1</label>
+                        <br>
+                        <label for="lvl">Type: </label>
+                        <label id="type" class="value">Projectile</label>
+                        <br>
+                        <label>Damage: </label>
+                        <label id="dmg" class="value">5</label>
+                        <br>
+                        <label>Range: </label>
+                        <label id="range" class="value">10</label>
+                        <br>
+                        <label>Pierce: </label>
+                        <label id="pierce" class="value">false</label>
+                        <br>
+                        <label>AOE: </label>
+                        <label id="aoe" class="value">false</label>
+                        <br>
+                        <label>Multi: </label>
+                        <label id="multi" class="value">false</label>
+                    </div>
+                    
+                </div>
+                <div id="functions">
+                        <label id="close" class="button">Close</label>
+                    </div>
+            </div>
+            <div id="playermenu">
+                <div class="info">
+                    <br>
+                    <label class="title">Idle Tower Defence</label>
+                    <br>
+                    <br>
+                    <label>HP:</label>
+                    <label id="hp" class="value">100</label>
+                    <br>
+                    <label>Wave:</label>
+                    <label id="wave" class="value">100</label>
+                    <br>
+                    <label>Gold:</label>
+                    <label id="gold" class="value">100</label>
+                    <br>
+                </div>
 
+                <div id="functions">
+                    <label id="buytower" class="button">Buy Tower</label>
+                    <label id="waveinc" class="button">Next Wave</label>
+                    <label id="dead" class="button">Try Again?</label>
+                </div>
+            </div>
 
-        <div id="towermenu">
-            <br>
-            <label for="lvl">Level: </label><label id="lvl">1</label>
-            <br>
-            <label for="lvl">Type: </label><label id="type">Projectile</label>
-            <br>
-            <label>Damage: </label><label id="dmg">5</label>
-            <br>
-            <label>Range: </label><label id="range">10</label>
-            <br>
-            <label>Pierce: </label><label id="pierce">false</label>
-            <br>
-            <label>AOE: </label><label id="aoe">false</label>
-            <br>
-            <label>Multi: </label><label id="multi">false</label>
-            
         </div>
     </div>
 
@@ -43,6 +85,7 @@
     <script src="js/enemy.js"></script>
     <script src="js/tower.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/player.js"></script>
     <script src="js/abilities/projectile.js"></script>
     <script src="js/abilities/beam.js"></script>
 </body>
