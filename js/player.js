@@ -9,7 +9,7 @@ class Player {
         this.hp = 100;
         this.gold = 100;
         this.buymode = true;
-        wave = 1;
+        wave = 0;
 
         enemies.forEach(function(e) {
             stage.removeChild(e.shape);
