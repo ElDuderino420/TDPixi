@@ -49,7 +49,8 @@ class Map {
                                     let t = new Tower(mouseData.target);
                                     towers.push(t);
                                     //mouseData.target.fillStyle = "Silver";
-                                    console.log(mouseData.target);
+                                    //console.log(mouseData.target);
+                                    ui.openTowerMenu(t);
                                     player.buymode = false;
 
 

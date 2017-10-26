@@ -63,7 +63,7 @@ class UI {
         }
         this.selectedtower = tower;
         tower.rangeview.visible  = true;
-        console.log(tower);
+        //console.log(tower);
         this.towermenu.style.display = "";
         this.towermenu.style.width   = "200px";
         this.playermenu.style.height = selectedmap.length*cellsize*2 + "px";

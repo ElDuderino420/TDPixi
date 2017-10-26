@@ -19,11 +19,13 @@ class Enemy {
             this.stagex = this.x * cellsize + (cellsize / 2);
         } else {
             this.stagex = 0 - number * cellsize;
+            //this.stagex = 0;
         }
         if (this.y != 0) {
             this.stagey = this.y * cellsize + (cellsize / 2);
         } else {
             this.stagey = 0 - number * cellsize;
+            //this.stagey = 0;
         }
 
 
@@ -35,6 +37,7 @@ class Enemy {
         this.shape.click = function(mouseData) {
             console.log("clicked");
             that.speed = that.speed/2;
+            that.hp -= player.dmg;
             setTimeout(function() {
                 that.speed = 1;
             }, 1000);

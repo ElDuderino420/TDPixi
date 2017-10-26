@@ -3,6 +3,7 @@ class Player {
         this.hp = 100;
         this.gold = 100;
         this.buymode = false;
+        this.dmg = 1;
     }
 
     reset() {
