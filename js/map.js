@@ -2,7 +2,10 @@ class Map {
     constructor(maparray, cellsize = 48) {
         this.maparray = maparray;
         this.cellsize = cellsize;
-
+        this.spawnspeed = 50;
+        this.counter = [];
+        this.waves = [];
+        this.ready = false;
         this.start = this.getstart();
         this.end = this.getend();
         let that = this;
@@ -10,8 +13,9 @@ class Map {
         this.getPath(function (path) {
             that.path = path;
             console.log(path);
-            that.spawnwave(2);
-            wave = 1;
+            //that.spawnwave(2);
+            that.ready = true;
+            
         });
     }
 
@@ -74,10 +78,53 @@ class Map {
         stage.addChild(map);
     }
 
-    spawnwave(number) {
-        for (let i = 0; i < number; i++) {
-            enemies.push(new Enemy(this.path, i));
+    spawnenemies() {
+        if(this.ready && this.waves.length == 0 && alive.length == 0){
+            wave++;
+            this.spawnwave(wave * 2);
         }
+        
+        //console.log(this.waves.length);
+        let that = this;
+        this.counter = this.counter.map(function(c) {
+            return c - 1;
+            //console.log(c);
+        });
+        for (let i = 0; i < this.counter.length; i++) {
+            if(this.counter[i] <= 0) {
+                this.counter[i] = this.spawnspeed;
+                if(this.waves[i][0]) {
+                    let enem = this.waves[i][0];
+
+                    let e = new Enemy(this.path, i, enem[1]);
+                    e.hp = enem[0];
+                    enemies.push(e);
+
+                    this.waves[i].splice(0,1);
+
+                    
+                } else {
+                    this.counter.splice(i,1);
+                    this.waves.splice(i,1);
+                    i--;
+                }
+            }            
+        }
+    }
+
+    spawnwave(number) {
+
+        this.counter.push(1);
+        let arr = [];
+        for (let i = 0; i < number; i++) {
+            //enemies.push(new Enemy(this.path, i));
+            let hp = (10 + wave);
+            let speed = 1 + (wave/5);
+            console.log(hp + " " + speed);
+            arr.push([hp,speed]);
+        }
+        
+        this.waves.push(arr);
     }
 
     getstart() {

@@ -62,7 +62,7 @@ function init() {
         antialias: true,
         transparent: true,
         resolution: 2,
-        roundPizels: false
+        roundPizels: true
     });
 
     //Add the canvas to the HTML document
@@ -82,6 +82,7 @@ function init() {
 
 
 function update() {
+    
     
 
     alive = enemies.filter(function (e) {
@@ -142,13 +143,13 @@ function update() {
         //t.shoot();
     })
 
-    
+    map.spawnenemies();
 
-    if(wave >= 1 && alive.length == 0) {
+    /* if(wave >= 1 && alive.length == 0) {
         enemies = [];
-        wave++;
+        //wave++;
         map.spawnwave(wave * 2);
-    }
+    } */
 
     ui.update();
     if(player.hp > 0) {
