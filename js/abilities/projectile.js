@@ -5,55 +5,56 @@
 class Projectile {
     constructor(shooter, x, y, angle, bulletSpeed, dmg, pierce, aoe, multi) {
         //this.type = type;
-        this.pierce  = pierce;
-        this.aoe     = aoe;
-        this.dead    = false;
-        this.dmg     = dmg;
-        this.bullet  = u.circle(4,"red");
+        this.pierce = pierce;
+        this.aoe = aoe;
+        this.dead = false;
+        this.dmg = dmg;
+        this.radius = 4;
+        this.bullet = u.circle(this.radius, "red");
         this.shooter = shooter;
         //Set the bullet's anchor point to its center
         this.bullet.anchor.set(0.5, 0.5);
-    
+
         //Temporarily add the bullet to the shooter
         //so that we can position it relative to the
         //shooter's position
         shooter.addChild(this.bullet);
-        
+
         this.bullet.x = x;
         this.bullet.y = y;
-    
+
         //Find the bullet's global coordinates so that we can use
         //them to position the bullet on the new parent container
         let tempGx = this.bullet.toGlobal(stage).x,
             tempGy = this.bullet.toGlobal(stage).y;
-            //console.log(bullet.toGlobal(container))
-            //console.log(bullet.getGlobalPosition())
+        //console.log(bullet.toGlobal(container))
+        //console.log(bullet.getGlobalPosition())
         //Add the bullet to the new parent container using
         //the new global coordinates
         stage.addChild(this.bullet);
         this.bullet.x = tempGx;
         this.bullet.y = tempGy;
-        
 
-        if(multi){
+
+        if (multi) {
             new Projectile(
-                shooter, x, y, angle-(Math.PI/12), bulletSpeed, dmg, pierce, aoe
+                shooter, x, y, angle - (Math.PI / 12), bulletSpeed, dmg, pierce, aoe
             );
             new Projectile(
-                shooter, x, y, angle+(Math.PI/12), bulletSpeed, dmg, pierce, aoe
+                shooter, x, y, angle + (Math.PI / 12), bulletSpeed, dmg, pierce, aoe
             );
         }
 
         //Set the bullet's velocity
         this.bullet.vx = Math.cos(angle) * bulletSpeed;
         this.bullet.vy = Math.sin(angle) * bulletSpeed;
-    
+
         //Push the bullet into the `bulletArray`
         bullets.push(this);
     }
 
     update() {
-        if(this.bullet.x < 0 || this.bullet.y < 0 || this.bullet.x > selectedmap[0].length*cellsize || this.bullet.y > selectedmap.length*cellsize){
+        if (this.bullet.x < 0 || this.bullet.y < 0 || this.bullet.x > selectedmap[0].length * cellsize || this.bullet.y > selectedmap.length * cellsize) {
             this.dead = true;
             stage.removeChild(this.bullet);
         } else {
@@ -62,14 +63,33 @@ class Projectile {
 
             let that = this;
             //that.bullet.radius = that.bullet.radius*2;
-            let proximity = alive.filter(function(a) {
-                return bump.hitTestCircle(a.shape,that.bullet,true);
+            let proximity = alive.filter(function (a) {
+                //return bump.hitTestCircle(a.shape, that.bullet, true);
+                let dx = a.x - that.bullet.x;
+                let dy = a.y - that.bullet.y;
+                return Math.sqrt((dx*dx) + (dy*dy)) <= a.radius + that.radius;
             })
 
-            console.log(proximity);
-            if(proximity.length > 0){
-                proximity.forEach(function(p){
-                    that.hit(p);
+
+            /* proximity.sort((a, b) => {
+                if (a.waypoint == b.waypoint) {
+                    if (Math.abs(a.shape.x - b.shape.x) > Math.abs(a.shape.y - b.shape.y)) {
+                        return Math.abs(a.shape.x - b.shape.x)
+                    } else {
+                        return Math.abs(a.shape.y - b.shape.y)
+                    }
+                } else {
+                    return b.waypoint - a.waypoint
+                }
+            }) */
+
+            //console.log(proximity);
+            if (proximity.length > 0) {
+                proximity.forEach(function (p) {
+                    if(bump.hitTestCircle(p.shape, that.bullet, true)){
+                        that.hit(p);
+                    }
+                    
                 })
             }
             /* proximity.forEach(function(a) {
@@ -97,7 +117,7 @@ class Projectile {
                 }
             }) */
         }
-        
+
     }
 
     kill() {
@@ -110,30 +130,30 @@ class Projectile {
         impactr.anchor.set(0.5, 0.5);
         stage.addChild(impactr);
         let that = this;
-        let splash = alive.filter(function(e) {
-            return bump.hitTestCircle(e.shape,impactr,true)
+        let splash = alive.filter(function (e) {
+            return bump.hitTestCircle(e.shape, impactr, true)
         });
         //console.log(splash)
-        splash.forEach(function(e) {
-            e.hp-=that.dmg;
+        splash.forEach(function (e) {
+            e.hp -= that.dmg;
         })
-        setTimeout(function() {
+        setTimeout(function () {
             stage.removeChild(impactr);
         }, 20);
 
     }
 
     hit(a) {
-        if(this.aoe) {
+        if (this.aoe) {
             this.impact(a);
 
-            if(!this.pierce){
+            if (!this.pierce) {
                 this.kill();
             }
         } else {
-            a.hp-= this.dmg;
+            a.hp -= this.dmg;
 
-            if(!this.pierce){
+            if (!this.pierce) {
                 this.kill();
             }
         }

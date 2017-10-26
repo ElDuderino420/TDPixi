@@ -88,7 +88,7 @@ function update() {
         return e.dead == false;
     });
 
-    alive.sort((a, b) => {
+    /* alive.sort((a, b) => {
         if(a.waypoint == b.waypoint) {
             if(Math.abs(a.shape.x - b.shape.x) > Math.abs(a.shape.y - b.shape.y)) {
                 return Math.abs(a.shape.x - b.shape.x)
@@ -98,7 +98,7 @@ function update() {
         } else {
             return b.waypoint-a.waypoint
         }
-    })
+    }) */
 
     alive.forEach(function(e) {
         e.update();
