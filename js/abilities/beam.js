@@ -13,6 +13,18 @@ class Beam {
         this.x       = x;
         this.y       = y;
 
+        this.targets = targets.sort((a, b) => {
+                if (a.waypoint == b.waypoint) {
+                    if (Math.abs(a.shape.x - b.shape.x) > Math.abs(a.shape.y - b.shape.y)) {
+                        return Math.abs(a.shape.x - b.shape.x)
+                    } else {
+                        return Math.abs(a.shape.y - b.shape.y)
+                    }
+                } else {
+                    return b.waypoint - a.waypoint
+                }
+            }) 
+
         this.arc     = arc;
         //Push the bullet into the `bulletArray`
         bullets.push(this);
