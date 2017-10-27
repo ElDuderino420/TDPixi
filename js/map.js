@@ -48,7 +48,7 @@ class Map {
                         () => {
                             let subsquare = u.rectangle(this.cellsize / 2, this.cellsize / 2, "seaGreen", "dimGray", 1)
                             subsquare.interactive = true;
-                            subsquare.click = function (mouseData) {
+                            /* subsquare.click = function (mouseData) {
                                 if (player.buymode) {
                                     let t = new Tower(mouseData.target);
                                     towers.push(t);
@@ -60,7 +60,32 @@ class Map {
 
                                 }
 
+                            } */
+                            subsquare.tap = function(touchData){
+                                console.log("TAP!");
+                                buytower(touchData);
                             }
+                            subsquare.touchend = function(touchData){
+                                console.log("TOUCH END!");
+                                buytower(touchData);
+                            }
+                            subsquare.mouseup = function(mouseData){
+                                console.log("MOUSE UP!");
+                                buytower(mouseData);
+                            }
+
+                            let buytower = function(positionData) {
+                                if (player.buymode) {
+                                    let t = new Tower(subsquare);
+                                    console.log(subsquare);
+                                    towers.push(t);
+                                    //mouseData.target.fillStyle = "Silver";
+                                    //console.log(mouseData.target);
+                                    ui.openTowerMenu(t);
+                                    player.buymode = false;
+                                }
+                            }
+                            
                             return subsquare;
                         }
                     )
