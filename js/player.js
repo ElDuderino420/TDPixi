@@ -23,7 +23,8 @@ class Player {
 
         enemies = [];
         towers = [];
-        
+        map.waves = [];
+        map.counter = [];
         update();
 
     }

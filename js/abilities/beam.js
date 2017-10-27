@@ -3,7 +3,7 @@
 // mulitshot
 
 class Beam {
-    constructor(shooter, x, y, targets, dmg, angle, arc) {
+    constructor(shooter, x, y, targets, dmg, angle, arc = false) {
         
         this.dead    = false;
         this.dmg     = dmg;
@@ -34,6 +34,14 @@ class Beam {
         
         if(!this.arc){
             this.single();
+        } else {
+            console.log(this.arc);
+            this.single();
+            for (let seg = 0; seg < this.arc; seg++) {
+                console.log(seg);
+                this.bounce(seg);
+                
+            }
         }
 
 
@@ -51,28 +59,28 @@ class Beam {
         
         let c = Math.sqrt( a*a + b*b );
         console.log(c);
-        this.line = u.rectangle(c, 2, "red", "black", 0, this.x, this.y);
-        this.line.anchor.set(0, 0.5);
-        this.line.rotation = this.angle;
+        let line = u.rectangle(c, 2, "red", "black", 0, this.x, this.y);
+        line.anchor.set(0, 0.5);
+        line.rotation = this.angle;
 
-        this.shooter.addChild(this.line);
+        this.shooter.addChild(line);
         
-        this.line.x = this.x;
-        this.line.y = this.y;
+        line.x = this.x;
+        line.y = this.y;
     
         //Find the bullet's global coordinates so that we can use
         //them to position the bullet on the new parent container
-        let tempGx = this.line.toGlobal(stage).x,
-            tempGy = this.line.toGlobal(stage).y;
+        let tempGx = line.toGlobal(stage).x,
+            tempGy = line.toGlobal(stage).y;
             //console.log(bullet.toGlobal(container))
             //console.log(bullet.getGlobalPosition())
         //Add the bullet to the new parent container using
         //the new global coordinates
         //console.log(tempGx);
-        this.line.x = tempGx;
-        this.line.y = tempGy;
+        line.x = tempGx;
+        line.y = tempGy;
 
-        stage.addChild(this.line);
+        stage.addChild(line);
         
 
         this.dead = true;
@@ -81,8 +89,54 @@ class Beam {
 
         let that = this;
         setTimeout(function() {
-            stage.removeChild(that.line)
-        }, 50);
+            console.log("removed");
+            stage.removeChild(line)
+        }, 20);
+    }
+
+    bounce(prev){
+
+        if(this.targets[prev+1]){
+            let a = this.targets[prev+1].x - this.targets[prev].x;
+            let b = this.targets[prev+1].y - this.targets[prev].y;
+            
+            let c = Math.sqrt( a*a + b*b );
+            console.log(c);
+            let line = u.rectangle(c, 2, "red", "black", 0, this.targets[prev].x, this.targets[prev].y);
+            line.anchor.set(0, 0.5);
+            line.rotation = Math.atan2(b, a);
+    
+            /* this.shooter.addChild(this.line);
+            
+            this.line.x = this.x;
+            this.line.y = this.y;
+        
+            //Find the bullet's global coordinates so that we can use
+            //them to position the bullet on the new parent container
+            let tempGx = this.line.toGlobal(stage).x,
+                tempGy = this.line.toGlobal(stage).y;
+                //console.log(bullet.toGlobal(container))
+                //console.log(bullet.getGlobalPosition())
+            //Add the bullet to the new parent container using
+            //the new global coordinates
+            //console.log(tempGx);
+            this.line.x = tempGx;
+            this.line.y = tempGy;
+     */
+            stage.addChild(line);
+            
+    
+            this.dead = true;
+    
+            this.targets[prev+1].hp -= this.dmg;
+    
+            let that = this;
+            setTimeout(function() {
+                console.log("removed");
+                stage.removeChild(line)
+            }, 20);
+        }
+        
     }
 
     impact(hit) {

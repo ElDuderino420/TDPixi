@@ -157,7 +157,8 @@ class Tower {
                 u._getCenter(this.tower, this.tower.height, "y"),
                 targets,
                 this.dmg,
-                this.tower.rotation
+                this.tower.rotation,
+                3
             );
         } else {
             this.shoottime--;

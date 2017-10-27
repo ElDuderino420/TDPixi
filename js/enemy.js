@@ -11,8 +11,8 @@ class Enemy {
         this.dead     = false;
         let that      = this;
 
-        if(this.speed > 9) {
-            this.speed = 9;
+        if(this.speed > 8) {
+            this.speed = 8;
         }
 
         if (this.x != 0) {
