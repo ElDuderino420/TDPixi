@@ -26,7 +26,7 @@ class UI {
         this.t_buy.onclick = function() {
             if(player.gold >= 50) {
                 player.buymode = true;
-                player.gold-=50;
+                
             }
 
         }

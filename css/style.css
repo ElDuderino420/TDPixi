@@ -17,6 +17,14 @@
     max-height: 300px;
 }
 
+#upgrades {
+    position: absolute;
+    bottom: 60px;
+    
+    width: 100%;
+    max-height: 300px;
+}
+
 #towerinfo {
     position: absolute;
     top: 0px;
@@ -68,6 +76,19 @@
     margin: 20px;
     text-align: center;
     background-color: MediumSeaGreen;
+    border: 1px solid black;
+}
+
+#close {
+    background-color: Tomato
+}
+
+.upbutton {
+    display: block;
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+    background-color: Teal;
     border: 1px solid black;
 }
 

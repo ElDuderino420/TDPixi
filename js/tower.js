@@ -158,7 +158,7 @@ class Tower {
                 targets,
                 this.dmg,
                 this.tower.rotation,
-                3
+                100
             );
         } else {
             this.shoottime--;
@@ -184,7 +184,7 @@ class Tower {
     };
 
     upgrade(newability, dmg, range, reloadspeed, affixarr) {
-
+        
     }
 
 

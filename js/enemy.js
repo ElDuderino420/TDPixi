@@ -2,6 +2,8 @@ class Enemy {
     constructor(path, number, speed = 1) {
         this.x        = path[0].x;
         this.y        = path[0].y;
+        this.vx       = 0;
+        this.vy       = 0;
         this.path     = path;
         this.hp       = 10;
         this.maxHP    = this.hp;
@@ -63,17 +65,29 @@ class Enemy {
             let pointy = target.y * cellsize + cellsize / 2;
             //console.log("x: " + pointx + " y: " + pointy);
             if ((this.x - pointx) > 3) {
-                this.x -= this.speed;
+                //this.x -= this.speed;
+                this.vx = -this.speed;
+                this.vy = 0;
             }
             if ((this.x - pointx) < -3) {
-                this.x += this.speed;
+                //this.x += this.speed;
+                this.vx = this.speed;
+                this.vy = 0;
             }
             if ((this.y - pointy) > 3) {
-                this.y -= this.speed;
+                //this.y -= this.speed;
+                this.vy = -this.speed;
+                this.vx = 0;
             }
             if ((this.y - pointy) < -3) {
-                this.y += this.speed;
+                //this.y += this.speed;
+                this.vy = this.speed;
+                this.vx = 0;
             }
+
+            this.x += this.vx;
+            this.y += this.vy;
+
             this.shape.x = this.x;
             this.shape.y = this.y;
             if (Math.abs(this.x - pointx) <= 3 && Math.abs(this.y - pointy) <= 3) {

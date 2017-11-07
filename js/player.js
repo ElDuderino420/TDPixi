@@ -12,7 +12,7 @@ class Player {
         this.buymode = true;
         wave = 0;
 
-        enemies.forEach(function(e) {
+        alive.forEach(function(e) {
             stage.removeChild(e.shape);
             //u.remove(e.shape);
         })

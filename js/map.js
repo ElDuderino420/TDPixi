@@ -76,6 +76,7 @@ class Map {
 
                             let buytower = function(positionData) {
                                 if (player.buymode) {
+                                    player.gold-=50;
                                     let t = new Tower(subsquare);
                                     console.log(subsquare);
                                     towers.push(t);
@@ -105,6 +106,7 @@ class Map {
 
     spawnenemies() {
         if(this.ready && this.waves.length == 0 && alive.length == 0){
+            enemies = [];
             wave++;
             this.spawnwave(wave * 2);
         }
