@@ -43,7 +43,7 @@ let map1 = [
 
 function init() {
     //Create the renderer
-    selectedmap = map1;
+    selectedmap = map2;
 
     renderer = PIXI.autoDetectRenderer(selectedmap[0].length*cellsize, selectedmap.length*cellsize, {
         view: myView,
